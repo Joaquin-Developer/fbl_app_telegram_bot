@@ -1,0 +1,22 @@
+{
+  "name": "fbl_app_telegram_bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "mybot": "node src/bots/mybot.js",
+    "mybotTest": "nodemon src/bots/mybot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "nodemon": "^3.1.7"
+  }
+}
