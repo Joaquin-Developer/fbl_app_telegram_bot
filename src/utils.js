@@ -10,7 +10,7 @@ const utils = {}
 
 
 utils.readFile = (filePath) => {
-    const _path = path.join(__dirname, "..", "..", filePath)
+    const _path = path.join(__dirname, "..", filePath)
     return fs.readFileSync(_path, "utf-8")
 }
 

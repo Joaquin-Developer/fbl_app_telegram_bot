@@ -11,9 +11,11 @@ class BotTemplate {
         this.helpFileName = "help.txt"
     }
 
-    helpController(ctx) {
+    async helpController(ctx) {
         try {
-            ctx.reply(utils.readFile(`files/${this.helpFileName}`))
+            // ctx.reply(utils.readFile(`files/${this.helpFileName}`))
+            ctx.reply(utils.readFile(`files/sa24_help.txt`))
+            // TypeError: Cannot read properties of undefined (reading 'helpFileName')
         } catch (error) {
             console.error(error)
             ctx.reply("Internal error.")
