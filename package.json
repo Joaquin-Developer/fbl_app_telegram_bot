@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "mybot": "node src/bots/mybot.js",
-    "mybotTest": "nodemon src/bots/mybot.js"
+    "sa24": "node src/bots/sa24.js",
+    "sa24Test": "nodemon src/bots/sa24.js"
   },
   "keywords": [],
   "author": "",

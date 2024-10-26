@@ -1,7 +1,10 @@
 const fs = require("fs")
 const path = require("path")
 const axios = require("axios")
-const { AxiosFetchError } = require("../exceptions/exceptions")
+
+
+class AxiosFetchError extends Error { }
+
 
 const utils = {}
 

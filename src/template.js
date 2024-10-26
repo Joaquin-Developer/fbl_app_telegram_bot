@@ -6,32 +6,33 @@ const utils = require("./utils")
 
 class BotTemplate {
     constructor() {
-        this.bot = new Telegraf(config.TELEGRAM_TOKEN)
+        this.bot = new Telegraf(config.DEFAULT_TELEGRAM_TOKEN)
         this.commands = ["helloworld", "example"]
         this.helpFileName = "help.txt"
     }
 
-    static helpController(ctx) {
+    helpController(ctx) {
         try {
-            ctx.reply(utils.readFile(this.helpFileName))
+            ctx.reply(utils.readFile(`files/${this.helpFileName}`))
         } catch (error) {
             console.error(error)
-            ctx.reply(":)")
+            ctx.reply("Internal error.")
         }
     }
 
-    static async helloWorldController(ctx) {
+    async helloWorldController(ctx) {
         ctx.reply("Hello!")
     }
 
-    static async hearsHandle(ctx) {
-        ctx.reply("Use /help")
+    async hearsHandle(ctx) {
+        const username = ctx.message.from.first_name
+        ctx.reply(`Hola ${username}\nPara saber como usarme escribí /help`)
     }
 
     main() {
         this.bot.help(this.helpController)
         this.bot.command("helloworld", this.helloWorldController)
-        this.bot.hears(/.*/, botEvents.hearsHandle)
+        this.bot.hears(/.*/, this.hearsHandle)
         console.log("Running bot...")
         this.bot.launch()
     }

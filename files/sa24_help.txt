@@ -1,0 +1,14 @@
+Comandos del bot:
+
+/all
+Ver todos los ultimos 15 partidos
+
+/matches
+Ver todos los partidos de la ronda actual que se está disputando.
+
+/result <id> <local>-<visitante>
+Actualizar el resultado de un partido.
+Ejemplo: /result 25 4-2
+
+/statistics
+Obtener la tabla de estadisticas del campeonato.
