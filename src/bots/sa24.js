@@ -11,10 +11,8 @@ class SA24Bot extends BotTemplate {
         this.helpFileName = "sa24_help.txt"
     }
 
-    async matches(ctx) {
-        const data = await utils.fetch(`${config.FBL_APP_API}/sa_cup_24/get_matches_last_date`)
-        const round = data[0].round
-        let resTxt = `ROUND ${round}\n\n`
+    static getRoundMessage(data, roundNumber) {
+        let resTxt = `ROUND ${roundNumber}\n\n`
 
         for (const match of data) {
             resTxt += `${match.id}) `
@@ -24,8 +22,18 @@ class SA24Bot extends BotTemplate {
                 resTxt += `${match.home_team_name} vs ${match.away_team_name}`
             resTxt += "\n\n"
         }
+        return resTxt
+    }
 
-        ctx.reply(resTxt)
+    async matches(ctx) {
+        try {
+            const data = await utils.fetch(`${config.FBL_APP_API}/sa_cup_24/get_matches_last_date`)
+            const round = data[0].round
+            ctx.reply(SA24Bot.getRoundMessage(data, round))
+        } catch (error) {
+            console.error(error)
+            ctx.reply("Error al obtener los datos. Intente mas tarde.")
+        }
     }
     
     async allMatches(ctx) {
@@ -90,7 +98,15 @@ class SA24Bot extends BotTemplate {
     }
 
      async round(ctx) {
-        // TODO implement this!
+        const roundNumber = parseInt(ctx.message.text.split("/round ")[1])
+        try {
+            const url = `${config.FBL_APP_API}/sa_cup_24/round/${roundNumber}`
+            const data = await utils.fetch(url, utils.TypeRequest.GET)
+            ctx.reply(SA24Bot.getRoundMessage(data, roundNumber))
+        } catch (error) {
+            console.error(error)
+            ctx.reply("Error al obtener los datos. Intente mas tarde.")
+        }
     }
 
     async team(ctx) {
@@ -103,7 +119,7 @@ class SA24Bot extends BotTemplate {
         this.bot.command("matches", this.matches)
         this.bot.command("result", this.result)
         this.bot.command("statistics", this.statistics)
-        // this.bot.command("round", this.round)
+        this.bot.command("round", this.round)
         // this.bot.command("team", this.team)
         this.bot.hears(/.*/, this.hearsHandle)
         console.log("Running bot...")
